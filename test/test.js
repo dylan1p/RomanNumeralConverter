@@ -3,20 +3,24 @@ const RomanNumeral = require('../romanNumeral');
 
 describe('Roman numeral converter', () => {
     it('null or empty when creating should return \'value required\'', () => {
-        assert.throws(()=> { new RomanNumeral() }, "value required" );
+        assert.throws(()=> { new RomanNumeral() }, 'value required' );
     });
+    it('\'\' as value should return \'value required\'', () => {
+        assert.throws(()=> { new RomanNumeral() }, 'value required' );
+    });
+
     describe('Converting Numbers to Roman Numerals', () => {
         it('0 as value should return \'invalid range\'', () => {
             const romanNumeral = new RomanNumeral(0);
-            assert.throws(()=> { romanNumeral.toString() }, "invalid range" );
+            assert.throws(()=> { romanNumeral.toString() }, 'invalid range' );
         });
         it('10000 as value should return \'invalid range\'', () => {
             const romanNumeral = new RomanNumeral(10000);
-            assert.throws(()=> { romanNumeral.toString() }, "invalid range" );
+            assert.throws(()=> { romanNumeral.toString() }, 'invalid range' );
         });
         it('over 3999 as value should return \'invalid range\'', () => {
             const romanNumeral = new RomanNumeral(4000);
-            assert.throws(()=> { romanNumeral.toString() }, "invalid range" );
+            assert.throws(()=> { romanNumeral.toString() }, 'invalid range' );
         });
         it('1 as value should return I', () => {
             const romanNumeral = new RomanNumeral(1);
@@ -60,6 +64,10 @@ describe('Roman numeral converter', () => {
             const romanNumeral = new RomanNumeral('III');
             assert.equal(romanNumeral.toInt(), 3);
         });
+        it('IIII as value should return 4', () => {
+            const romanNumeral = new RomanNumeral('IIII');
+            assert.equal(romanNumeral.toInt(), 4);
+        });
         it('IV as value should return 4', () => {
             const romanNumeral = new RomanNumeral('IV');
             assert.equal(romanNumeral.toInt(), 4);
@@ -83,6 +91,24 @@ describe('Roman numeral converter', () => {
         it('MMMMCMXCIX as value should return 4999', () => {
             const romanNumeral = new RomanNumeral('MMMMCMXCIX');
             assert.equal(romanNumeral.toInt(), 4999);
+        });
+    });
+    describe('invalid values', () => {
+        it('MMMMDMXCIX as value should return \'invalid value\'', () => {
+            const romanNumeral = new RomanNumeral('MMMMDMXCIX');
+            assert.throws(()=> { romanNumeral.toInt() }, 'invalid value' );
+        });
+        it('DM as value should return \'invalid value\'', () => {
+            const romanNumeral = new RomanNumeral('DM');
+            assert.throws(()=> { romanNumeral.toInt() }, 'invalid value' );
+        });
+        it('CD1X as value should return \'invalid value\'', () => {
+            const romanNumeral = new RomanNumeral('CD1X');
+            assert.throws(()=> { romanNumeral.toInt() }, 'invalid value' );
+        });
+        it('\'error\' as value should return \'invalid value\'', () => {
+            const romanNumeral = new RomanNumeral('error');
+            assert.throws(()=> { romanNumeral.toInt() }, 'invalid value' );
         });
     })
 });

@@ -14,19 +14,22 @@ module.exports = function(val) {
         'IV' : 4,
         'I'  : 1
     };
-    if(val === undefined || null) {
+    if(val === undefined || val === null || val === '') {
         throw new Error('value required');
     }
     function toInt() {
         let results = 0;
-        let valCopy = val;
-        console.log(valCopy);
+        let valToUpperCase = val.toUpperCase();
+
         Object.entries(RomanNumeralMap).forEach(([key, value]) => {
-            while(valCopy.indexOf(key)===0) {
+            while(valToUpperCase.indexOf(key)===0) {
                 results += value;
-                valCopy = valCopy.slice(key.length, valCopy.length);
+                valToUpperCase = valToUpperCase.slice(key.length, valToUpperCase.length);
             }
         });
+        if(valToUpperCase.length > 0) {
+            throw new Error('invalid value');
+        }
         return results;
     }
     function toString() {
