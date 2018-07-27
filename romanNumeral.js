@@ -5,9 +5,12 @@ module.exports = function(num) {
     function toInt() {
     }
     function toString() {
+        if(+num < 1 || +num > 3999) {
+            throw new Error('invalid range');
+        }
     }
     return ({
         toInt: toInt,
         toString: toString
     });
-}
+};
