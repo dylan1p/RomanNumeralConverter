@@ -5,7 +5,7 @@ describe('Roman numeral converter', () => {
     it('null or empty when creating should return \'value required\'', () => {
         assert.throws(()=> { new RomanNumeral() }, "value required" );
     });
-    describe('Converting numbers to Roman Numeral', () => {
+    describe('Converting Numbers to Roman Numerals', () => {
         it('0 as value should return \'invalid range\'', () => {
             const romanNumeral = new RomanNumeral(0);
             assert.throws(()=> { romanNumeral.toString() }, "invalid range" );
@@ -51,4 +51,38 @@ describe('Roman numeral converter', () => {
             assert.equal(romanNumeral.toString(), 'MMM')
         });
     });
+    describe('Convert Roman Numerals to Numbers', () => {
+        it('I as value should return 1', () => {
+            const romanNumeral = new RomanNumeral('I');
+            assert.equal(romanNumeral.toInt(), 1);
+        });
+        it('III as value should return 3', () => {
+            const romanNumeral = new RomanNumeral('III');
+            assert.equal(romanNumeral.toInt(), 3);
+        });
+        it('IV as value should return 4', () => {
+            const romanNumeral = new RomanNumeral('IV');
+            assert.equal(romanNumeral.toInt(), 4);
+        });
+        it('V as value should return 5', () => {
+            const romanNumeral = new RomanNumeral('V');
+            assert.equal(romanNumeral.toInt(), 5);
+        });
+        it('CDXXIX as value should return 429', () => {
+            const romanNumeral = new RomanNumeral('CDXXIX');
+            assert.equal(romanNumeral.toInt(), 429);
+        });
+        it('MCDLXXXII as value should return 1482', () => {
+            const romanNumeral = new RomanNumeral('MCDLXXXII');
+            assert.equal(romanNumeral.toInt(), 1482);
+        });
+        it('MCMLXXX as value should return 1980', () => {
+            const romanNumeral = new RomanNumeral('MCMLXXX');
+            assert.equal(romanNumeral.toInt(), 1980);
+        });
+        it('MMMMCMXCIX as value should return 4999', () => {
+            const romanNumeral = new RomanNumeral('MMMMCMXCIX');
+            assert.equal(romanNumeral.toInt(), 4999);
+        });
+    })
 });

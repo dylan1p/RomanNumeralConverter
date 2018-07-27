@@ -1,4 +1,4 @@
-module.exports = function(num) {
+module.exports = function(val) {
     const RomanNumeralMap = {
         'M'  : 1000,
         'CM' : 900,
@@ -14,22 +14,32 @@ module.exports = function(num) {
         'IV' : 4,
         'I'  : 1
     };
-    if(num === undefined || null) {
+    if(val === undefined || null) {
         throw new Error('value required');
     }
     function toInt() {
+        let results = 0;
+        let valCopy = val;
+        console.log(valCopy);
+        Object.entries(RomanNumeralMap).forEach(([key, value]) => {
+            while(valCopy.indexOf(key)===0) {
+                results += value;
+                valCopy = valCopy.slice(key.length, valCopy.length);
+            }
+        });
+        return results;
     }
     function toString() {
-        if(+num < 1 || +num > 3999) {
+        if(+val < 1 || +val > 3999) {
             throw new Error('invalid range');
         }
         let results = '';
-        let numCopy = num;
+        let valCopy = val;
 
         Object.entries(RomanNumeralMap).forEach(([key, value]) => {
-            while(numCopy%value < numCopy) {
+            while(valCopy%value < valCopy) {
                 results += key;
-                numCopy -= value;
+                valCopy -= value;
             }
         });
         return results;
