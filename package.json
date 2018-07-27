@@ -1,0 +1,23 @@
+{
+  "name": "romannumeralconverter",
+  "version": "1.0.0",
+  "description": "Convert numbers to Roman Numeral",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dylan1p/RomanNumeralConverter.git"
+  },
+  "author": "Dylan Clarke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dylan1p/RomanNumeralConverter/issues"
+  },
+  "homepage": "https://github.com/dylan1p/RomanNumeralConverter#readme",
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^5.2.0"
+  }
+}
