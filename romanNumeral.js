@@ -9,6 +9,25 @@ class RomanNumeral {
     }
 
     toInt() {
+        return this.convertToInteger(this.romanNumeralValues, this.romanNumerals, this.val);
+    }
+
+    convertToInteger(romanNumeralValues, romanNumerals, stringValue, numberValue=0, previousRomanNumeralValue) {
+        if(stringValue.length === 0) return numberValue;
+
+        for(let i=0; i<romanNumerals.length; i++) {
+            if(stringValue.indexOf(romanNumerals[i]) === 0) {
+                if(romanNumeralValues[i] > previousRomanNumeralValue) {
+                    throw new Error('invalid value');
+                }
+
+                const newNumberValue = (numberValue + romanNumeralValues[i])
+                const remaindingStringValue = stringValue.slice(romanNumerals[i].length, stringValue.length);
+
+                return this.convertToInteger(romanNumeralValues, romanNumerals, remaindingStringValue, newNumberValue, romanNumeralValues[i]);
+            }
+        }
+        throw new Error('invalid value');
     }
 
     toString() {
@@ -23,8 +42,10 @@ class RomanNumeral {
 
         for(let i=0; i<romanNumeralValues.length; i++) {
             if(numberValue%romanNumeralValues[i] < numberValue) {
-                const newNumberValue = (numberValue -= romanNumeralValues[i]);
-                return this.convertToString(romanNumeralValues, romanNumerals, newNumberValue, stringValue.concat(romanNumerals[i]));
+                const remaindingNumberValue = (numberValue -= romanNumeralValues[i]);
+                const newStringValue = stringValue.concat(romanNumerals[i]);
+
+                return this.convertToString(romanNumeralValues, romanNumerals, remaindingNumberValue, newStringValue);
             }
         }
     }
