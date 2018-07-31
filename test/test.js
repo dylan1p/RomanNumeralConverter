@@ -6,7 +6,7 @@ describe('Roman numeral converter', () => {
         assert.throws(()=> { new RomanNumeral() }, 'value required' );
     });
     it('\'\' as value should return \'value required\'', () => {
-        assert.throws(()=> { new RomanNumeral() }, 'value required' );
+        assert.throws(()=> { new RomanNumeral('') }, 'value required' );
     });
 
     describe('Converting Numbers to Roman Numerals', () => {
@@ -55,6 +55,7 @@ describe('Roman numeral converter', () => {
             assert.equal(romanNumeral.toString(), 'MMM')
         });
     });
+
     describe('Convert Roman Numerals to Numbers', () => {
         it('I as value should return 1', () => {
             const romanNumeral = new RomanNumeral('I');
@@ -93,6 +94,7 @@ describe('Roman numeral converter', () => {
             assert.equal(romanNumeral.toInt(), 4999);
         });
     });
+
     describe('invalid values', () => {
         it('MMMMDMXCIX as value should return \'invalid value\'', () => {
             const romanNumeral = new RomanNumeral('MMMMDMXCIX');

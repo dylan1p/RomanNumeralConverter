@@ -14,9 +14,11 @@ module.exports = function(val) {
         'IV' : 4,
         'I'  : 1
     };
+
     if(val === undefined || val === null || val === '') {
         throw new Error('value required');
     }
+
     function toInt() {
         let results = 0;
         let valToUpperCase = val.toUpperCase();
@@ -32,6 +34,7 @@ module.exports = function(val) {
         }
         return results;
     }
+
     function toString() {
         if(+val < 1 || +val > 3999) {
             throw new Error('invalid range');
@@ -47,6 +50,7 @@ module.exports = function(val) {
         });
         return results;
     }
+
     return ({
         toInt: toInt,
         toString: toString
