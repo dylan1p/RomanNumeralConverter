@@ -31,7 +31,7 @@ class RomanNumeral {
     }
 
     toString() {
-        if(+val < 1 || +val > 3999) {
+        if(+this.val < 1 || +this.val > 3999) {
             throw new Error('invalid range');
         }
         return this.convertToString(this.romanNumeralValues, this.romanNumerals, this.val);
