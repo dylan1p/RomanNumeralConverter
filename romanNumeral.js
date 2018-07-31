@@ -42,7 +42,7 @@ class RomanNumeral {
 
         for(let i=0; i<romanNumeralValues.length; i++) {
             if(numberValue%romanNumeralValues[i] < numberValue) {
-                const remaindingNumberValue = (numberValue -= romanNumeralValues[i]);
+                const remaindingNumberValue = (numberValue - romanNumeralValues[i]);
                 const newStringValue = stringValue.concat(romanNumerals[i]);
 
                 return this.convertToString(romanNumeralValues, romanNumerals, remaindingNumberValue, newStringValue);
