@@ -1,58 +1,54 @@
-module.exports = function(val) {
-    const RomanNumeralMap = {
-        'M'  : 1000,
-        'CM' : 900,
-        'D'  : 500,
-        'CD' : 400,
-        'C'  : 100,
-        'XC' : 90,
-        'L'  : 50,
-        'XL' : 40,
-        'X'  : 10,
-        'IX' : 9,
-        'V'  : 5,
-        'IV' : 4,
-        'I'  : 1
-    };
-
-    if(val === undefined || val === null || val === '') {
-        throw new Error('value required');
-    }
-
-    function toInt() {
-        let results = 0;
-        let valToUpperCase = val.toUpperCase();
-
-        Object.entries(RomanNumeralMap).forEach(([key, value]) => {
-            while(valToUpperCase.indexOf(key)===0) {
-                results += value;
-                valToUpperCase = valToUpperCase.slice(key.length, valToUpperCase.length);
-            }
-        });
-        if(valToUpperCase.length > 0) {
-            throw new Error('invalid value');
+class RomanNumeral {
+    constructor(val) {
+        if(val === undefined || val === null || val === '') {
+            throw new Error('value required');
         }
-        return results;
+        this.romanNumerals = ['M','CM','D','CD','C','XC','L','XL','X','IX','V','IV','I'];
+        this.romanNumeralValues = [1000,900,500,400,100,90,50,40,10,9,5,4,1];
+        this.val = val;
     }
 
-    function toString() {
-        if(+val < 1 || +val > 3999) {
+    toInt() {
+        return this.convertToInteger(this.romanNumeralValues, this.romanNumerals, this.val);
+    }
+
+    convertToInteger(romanNumeralValues, romanNumerals, stringValue, numberValue=0, previousRomanNumeralValue) {
+        if(stringValue.length === 0) return numberValue;
+
+        for(let i=0; i<romanNumerals.length; i++) {
+            if(stringValue.indexOf(romanNumerals[i]) === 0) {
+                if(romanNumeralValues[i] > previousRomanNumeralValue) {
+                    throw new Error('invalid value');
+                }
+
+                const newNumberValue = (numberValue + romanNumeralValues[i])
+                const remaindingStringValue = stringValue.slice(romanNumerals[i].length, stringValue.length);
+
+                return this.convertToInteger(romanNumeralValues, romanNumerals, remaindingStringValue, newNumberValue, romanNumeralValues[i]);
+            }
+        }
+        throw new Error('invalid value');
+    }
+
+    toString() {
+        if(+this.val < 1 || +this.val > 3999) {
             throw new Error('invalid range');
         }
-        let results = '';
-        let valCopy = val;
-
-        Object.entries(RomanNumeralMap).forEach(([key, value]) => {
-            while(valCopy%value < valCopy) {
-                results += key;
-                valCopy -= value;
-            }
-        });
-        return results;
+        return this.convertToString(this.romanNumeralValues, this.romanNumerals, this.val);
     }
 
-    return ({
-        toInt: toInt,
-        toString: toString
-    });
+    convertToString(romanNumeralValues, romanNumerals, numberValue, stringValue='') {
+        if(numberValue < 1) return stringValue;
+
+        for(let i=0; i<romanNumeralValues.length; i++) {
+            if(numberValue%romanNumeralValues[i] < numberValue) {
+                const remaindingNumberValue = (numberValue - romanNumeralValues[i]);
+                const newStringValue = stringValue.concat(romanNumerals[i]);
+
+                return this.convertToString(romanNumeralValues, romanNumerals, remaindingNumberValue, newStringValue);
+            }
+        }
+    }
 };
+
+module.exports = RomanNumeral;
